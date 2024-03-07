@@ -1,57 +1,92 @@
-\documentclass{article}
+\documentclass{article} % Create new a report
 \usepackage[utf8]{inputenc}
-\usepackage[T5]{fontenc}
-\usepackage[fontsize=13pt]{scrextend}
+\usepackage[T5]{fontenc} % To use unicode
+\usepackage[fontsize=13pt]{scrextend} 
 \usepackage[paperheight=29.7cm,paperwidth=21cm,right=2cm,left=3cm,top=2cm,bottom=2.5cm]{geometry}
-\usepackage{mathptmx}
+\usepackage{mathptmx} % Time New Roman
 \usepackage{graphicx} % Required for inserting images
-\usepackage{float}
-\usepackage{tikz}
-\usepackage{array} % Required for Table Column Text Alignment with Custom Widths
+\usepackage{float} % Set position of image.
+\usepackage{tikz} % Create border
 \usetikzlibrary{calc}
+\usepackage{array} % Required for Table Column Text Alignment with Custom Widths
+\usepackage{indentfirst}
+\renewcommand{\baselinestretch}{1.2}
+
+\setlength{\parskip}{6pt} % Spacing after
+\setlength{\parindent}{1cm}
+
+\usepackage{titlesec} % Set font style
+
+\setcounter{secnumdepth}{4} % Heading
+\titlespacing*{\section}{0pt}{0pt}{30pt} % Heading 1
+\titleformat*{\section}{\fontsize{16pt}{0pt}\selectfont \bfseries \centering}
+
+\titlespacing*{\subsection}{0pt}{10pt}{0pt} % Heading 2
+\titleformat*{\subsection}{\fontsize{14pt}{0pt}\selectfont \bfseries }
+
+\titlespacing*{\subsubsection}{0pt}{10pt}{0pt} % Heading 3
+\titleformat*{\subsubsection}{\fontsize{13pt}{0pt}\selectfont \bfseries \itshape}
+
+\titlespacing*{\paragraph}{0pt}{10pt}{0pt} % Heading 4
+\titleformat*{\paragraph}{\fontsize{13pt}{0pt}\selectfont \itshape}
 
 
+\renewcommand{\figurename}{\fontsize{12pt}{0pt}\selectfont \bfseries Hình}
+\renewcommand{\thefigure}{\thesubsection.\arabic{figure}}
+\usepackage{caption}
+\captionsetup[figure]{labelsep=space}
+
+
+\usepackage{lipsum}
+\renewcommand{\contentsname}{MỤC LỤC}
+\renewcommand{\listfigurename}{DANH MỤC HÌNH}
+\renewcommand{\refname}{TÀI LIỆU THAM KHẢO}
+
+\usepackage[unicode]{hyperref}
+\usepackage{colortbl}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\usepackage{forloop}
+\newcounter{loopcntr}
+\newcommand{\rpt}[2][1]{\forloop{loopcntr}{0}{\value{loopcntr}<#1}{#2}}
 
 \begin{document}
-% title page section
-\begin{titlepage}
-  \begin{tikzpicture}[overlay, remember picture]
-    \draw [line width=3pt]
-    ($ (current page.north west) + (3.0cm,-2.0cm) $)
-    rectangle
-    ($ (current page.south east) + (-2.0cm,2.5cm) $);
-    \draw [line width=0.5pt]
-    ($ (current page.north west) + (3.1cm,-2.1cm) $)
-    rectangle
-    ($ (current page.south east) + (-2.1cm,2.6cm) $);
-  \end{tikzpicture}
-  \begin{center}
-    \vspace{-6pt}TRƯỜNG ĐẠI HỌC CẦN THƠ \\
-    \textbf{\fontsize{14pt}{0pt}\selectfont TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG}
-    % \vspace{0.5cm}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=5cm]{images/logo-ctu.png}
-    \end{figure}
-    \textbf{PHÁT TRIỂN ỨNG DỤNG WEB} \\
-    \textbf{Mã Học Phần: CT449} \\
-    \vspace{4cm}
-    \textbf{\fontsize{16pt}{0pt}\selectfont BÁO CÁO} \\
-    \textbf{\fontsize{18pt}{0pt}\selectfont THỰC HÀNH BUỔI MỘT: BACKEND} \\
-    \vspace{5cm}
-    \newcommand{\MyIndent}{\hspace{1cm}}
-    \begin{tabular}{p{8cm} l}
-      \textbf{Giáo viên hướng dẫn}        & \textbf{Sinh viên thực hiện}  \\
-      \MyIndent Ths.GVC Nguyễn Minh Trung & \MyIndent Tên: Trần Thái Toàn \\
-                                          & \MyIndent MSSV: B2203534
-    \end{tabular}
 
+\input{corverPage}
 
-    \vspace{3cm}
-    \textbf{Học Kỳ II, 2023 - 2024} \\
-  \end{center}
-\end{titlepage}
+% \section*{LỜI CẢM ƠN}
+% \thispagestyle{empty}
+% \cleardoublepage
 
-\begin{titlepage}
-\end{titlepage}
+% Generate menu
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\tableofcontents
+\thispagestyle{empty}
+\cleardoublepage
+
+\pagenumbering{roman}
+% \section*{DANH MỤC HÌNH}
+% \addcontentsline{toc}{section}{\numberline{}DANH MỤC HÌNH}
+% \cleardoublepage
+
+% Automatically generate list figures
+\phantomsection
+{
+  \let\oldnumberline\numberline
+  \renewcommand{\numberline}{\figurename~\oldnumberline}
+  \listoffigures
+}
+\addcontentsline{toc}{section}{\numberline{}DANH MỤC HÌNH}
+\cleardoublepage
+
+\pagenumbering{arabic}
+\input{chapter-1}
+\newpage
+\input{chapter-2}
+\newpage
+
+\phantomsection
+\section*{TÀI LIỆU THAM KHẢO}
+\addcontentsline{toc}{section}{\numberline{}Tài liệu tham khảo}
+\renewcommand\UrlFont{\color{blue}\rmfamily\itshape}
+Github: \url{https://github.com/toantran292/TranThaiToan-B2203534-CT449}
 \end{document}
