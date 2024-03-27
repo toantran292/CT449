@@ -30,6 +30,13 @@
                     <i class="fas fa-address-card"></i>
                 </h4>
                 <ContactCard :contact="activeContact" />
+                <router-link :to="{
+                name: 'contact.edit',
+                params: { id: activeContact._id },
+            }">
+                    <span class="mt-2 badge badge-warning">
+                        <i class="fas fa-edit"></i> Hiệu chỉnh</span>
+                </router-link>
             </div>
         </div>
     </div>
@@ -53,21 +60,17 @@ export default {
         };
     },
     watch: {
-        // Giám sát các thay đổi của biến searchText.
-        // Bỏ chọn phần tử đang được chọn trong danh sách.
         searchText() {
             this.activeIndex = -1;
         },
     },
     computed: {
-        // Chuyển các đối tượng contact thành chuỗi để tiện cho tìm kiếm.
         contactStrings() {
             return this.contacts.map((contact) => {
                 const { name, email, address, phone } = contact;
                 return [name, email, address, phone].join("");
             });
         },
-        // Trả về các contact có chứa thông tin cần tìm kiếm.
         filteredContacts() {
             if (!this.searchText) return this.contacts;
             return this.contacts.filter((_contact, index) =>
